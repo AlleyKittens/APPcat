@@ -2,6 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0 2rem;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -35,3 +43,4 @@
     @apply bg-background text-foreground;
   }
 }
+
