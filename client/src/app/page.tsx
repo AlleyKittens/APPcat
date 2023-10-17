@@ -1,27 +1,41 @@
-import { AppleSingInButton, GoogleSingInButton } from "@/components/authButtons";
+'use client'
+import { GoogleSignInButton } from "@/components/authButtons";
+import { Loading } from "@/components/loading";
 import { LogoApp } from "@/components/logo";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { useSession } from "next-auth/react";
+import { redirect } from "next/navigation";
 
 
-export default function SingIn() {
-  return (
-    <main className="w-full flex flex-col gap-y-5">
-      <LogoApp/>
-      <h2 className="font-medium tracking-wide text-center uppercase">Login</h2>  
-      <div className="flex flex-col justify-center gap-y-4 mb-6">
-        <GoogleSingInButton/>
-        <AppleSingInButton/>
-      </div>
-      <div className="flex flex-row justify-center items-center gap-x-2">
-        <Separator className="w-20"/>
-        <span className="text-xs font-medium uppercase text-gray-400">ou</span>
-        <Separator className="w-20"/>
-      </div>
-      <div className="flex flex-col justify-center items-center mt-4">
-        <span className="text-xs">Não tem uma conta?</span>
-        <Button variant="link">Cadastre-se!</Button>
-      </div>
-    </main>
-  )
+export default function SingInPage() {
+  const { data: session, status } = useSession()
+  if (status === 'loading') {
+    return (
+      <Loading />
+    )
+  }
+  if (status === 'authenticated') {
+    return redirect("/user")
+  } else {
+    return (
+      <main className="w-full flex flex-col gap-y-5">
+        <LogoApp />
+        <h2 className="font-medium tracking-wide text-center uppercase">Login</h2>
+        <div className="flex flex-col justify-center gap-y-4 mb-6">
+          <GoogleSignInButton />
+        </div>
+        <div className="flex flex-row justify-center items-center gap-x-2">
+          <Separator className="w-20" />
+          <span className="text-xs font-medium uppercase text-gray-400">ou</span>
+          <Separator className="w-20" />
+        </div>
+        <div className="flex flex-col justify-center items-center mt-4">
+          <span className="text-xs">Não tem uma conta?</span>
+          <Button variant="link">Cadastre-se!</Button>
+        </div>
+      </main>
+    )
+  }
+
 }
