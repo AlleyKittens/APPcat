@@ -1,22 +1,31 @@
-import Image from "next/image";
-import { Button } from "@/components/ui/button";
-import AppleLogo from "@/assets/apple-logo.svg"
+import Image from "next/image"
+import { signIn, signOut } from "next-auth/react"
+import { Button } from "@/components/ui/button"
 import GoogleLogo from "@/assets/google-logo.svg"
 
-export function GoogleSingInButton() {
+export function GoogleSignInButton() {
+  const login = () => {
+    signIn("google")
+  }
+
   return (
-    <Button className="text-gray-500 flex flex-row justify-between items-center h-10 px-10" variant="outline">
-      <Image className="flex-none" width='16' src={GoogleLogo} alt=''/>
+    <Button
+      onClick={login}
+      className="text-gray-500 flex flex-row justify-between items-center h-10 px-10"
+      variant="outline"
+    >
+      <Image className="flex-none" width='16' src={GoogleLogo} alt='' />
       <span className="grow">Continue com Google</span>
     </Button>
   )
 }
 
-export function AppleSingInButton() {
+export function SignOutButton() {
+  const logout = () => {
+    signOut()
+  }
+
   return (
-    <Button className="text-gray-500 flex flex-row justify-between items-center h-10 px-10" variant="outline">
-      <Image className="flex-none" width='20' src={AppleLogo} alt=''/>
-      <span className="grow">Continue com Apple</span>
-    </Button>
+    <Button onClick={logout}>Sair</Button>
   )
 }
